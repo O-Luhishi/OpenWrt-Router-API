@@ -1,6 +1,7 @@
 package Vault_API
 
 import (
+	vault_config "github.com/Vioft/Vault-API/handlers/vault-config"
 	"github.com/Vioft/Vault-API/handlers/vault-port-scanner"
 	"github.com/julienschmidt/httprouter"
 )
@@ -21,10 +22,24 @@ type Routes []Route
 
 func AllRoutes() Routes {
 	routes := Routes{
-		Route{"HealthCheck", "GET", "/healthcheck", vault_port_scanner.HealthCheck},
-		Route{"LocalPortScan", "GET", "/scan", vault_port_scanner.ScanLocalHost},
-		Route{"DevicePortScan", "POST", "/device_scan/:ip_addr", vault_port_scanner.ScanNetworkDevice},
+		// Port-Scanner Module
+		Route{"LocalPortScan", "GET", "/portscan/local", vault_port_scanner.ScanLocalHost},
+		Route{"NetworkPortScan", "POST", "/portscan/:ip_addr", vault_port_scanner.ScanNetworkDevice},
 		Route{"Test", "GET", "/test/:try", vault_port_scanner.TestJson},
+
+		// Vault-Config Module
+		Route{"HealthCheck", "GET", "/healthcheck", vault_config.HealthCheck},
+		Route{"GetSystemInfo", "GET", "/config/getsysteminfo", vault_config.GetSystemInfo},
+		Route{"GetBoardInfo", "GET", "/config/getboardinfo", vault_config.GetBoardInfo},
+		Route{"GetWanStatus", "GET", "/config/getwanstatus", vault_config.GetWanStatus},
+		Route{"GetLanStatus", "GET", "/config/getlanstatus", vault_config.GetLanStatus},
+		Route{"GetWirelessStatus", "GET", "/config/getwirelessstatus", vault_config.GetWirelessStatus},
+		Route{"GetServiceList", "GET", "/config/getservicelist", vault_config.GetServiceList},
+		Route{"GetInterfaceList", "GET", "/config/getinterfacelist", vault_config.GetInterfaceList},
+		Route{"GetNetworkConfig", "GET", "/config/getnetworkconfig", vault_config.GetNetworkConfig},
+		Route{"GetWlanClients", "GET", "/config/getwlanclients", vault_config.GetWlanClients},
+
+		// Vault-Network-Mapper Module
 	}
 	return routes
 }

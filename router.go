@@ -20,4 +20,3 @@ func NewRouter(routes Routes) *httprouter.Router {
 
 	return router
 }
-

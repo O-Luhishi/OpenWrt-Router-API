@@ -2,18 +2,14 @@ package vault_port_scanner
 
 import (
 	"fmt"
+	"github.com/Vioft/Vault-API/common"
 	portscanner "github.com/anvie/port-scanner"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"time"
 )
 
-func HealthCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	response := fmt.Sprintf(`{Status: "UP"}`)
-	writeOKResponse(w, response)
-}
-
-func ScanLocalHost(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
+func ScanLocalHost(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	fmt.Fprint(w, "Scanning Beginning!\n")
 	ps := portscanner.NewPortScanner("localhost", 2*time.Second, 5)
 	m := make(map[int]string)
@@ -26,10 +22,10 @@ func ScanLocalHost(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
 		fmt.Println("  -->  ", ps.DescribePort(port))
 		m[port] = ps.DescribePort(port)
 	}
-	writeOKResponse(w, m)
+	common.WriteOKResponse(w, m)
 }
 
-func ScanNetworkDevice(w http.ResponseWriter, r *http.Request, params httprouter.Params){
+func ScanNetworkDevice(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	fmt.Fprint(w, "Scanning Beginning!\n")
 	ip_add := params.ByName("ip_add")
 	ps := portscanner.NewPortScanner(ip_add, 2*time.Second, 5)
@@ -43,14 +39,13 @@ func ScanNetworkDevice(w http.ResponseWriter, r *http.Request, params httprouter
 		fmt.Println("  -->  ", ps.DescribePort(port))
 		m[port] = ps.DescribePort(port)
 	}
-	writeOKResponse(w, m)
+	common.WriteOKResponse(w, m)
 }
 
-func TestJson(w http.ResponseWriter, r *http.Request, params httprouter.Params){
+func TestJson(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 	x := params.ByName("try")
-	if len(x) < 0{
-		writeErrorResponse(w, http.StatusNotFound, "Record Not Found")
+	if len(x) < 0 {
+		common.WriteErrorResponse(w, http.StatusNotFound, "Record Not Found")
 	}
-	writeOKResponse(w, x)
+	common.WriteOKResponse(w, x)
 }
-
