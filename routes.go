@@ -1,8 +1,9 @@
 package Vault_API
 
 import (
-	vault_config "github.com/Vioft/Vault-API/handlers/vault-config"
+	"github.com/Vioft/Vault-API/handlers/vault-config"
 	"github.com/Vioft/Vault-API/handlers/vault-port-scanner"
+	"github.com/Vioft/Vault-API/handlers/vault-network-mapper"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -40,6 +41,7 @@ func AllRoutes() Routes {
 		Route{"GetWlanClients", "GET", "/config/getwlanclients", vault_config.GetWlanClients},
 
 		// Vault-Network-Mapper Module
+		Route{"GetConnectedClients", "GET", "/networkmap/getconnectedclients", vault_network_mapper.GetConnectedDevices},
 	}
 	return routes
 }

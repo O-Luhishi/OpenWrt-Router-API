@@ -20,9 +20,17 @@ type ApiError struct {
 	Title  string `json:"title"`
 }
 
+
+func ClientResponse(s []byte, w http.ResponseWriter) {
+	stat := s
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(stat)
+}
+
 // Writes the response as a standard JSON response with StatusOK
 func WriteOKResponse(w http.ResponseWriter, m interface{}) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(&JsonResponse{Data: m}); err != nil {
 		WriteErrorResponse(w, http.StatusInternalServerError, "Internal Server Error")
