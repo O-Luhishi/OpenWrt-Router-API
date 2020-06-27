@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/Vioft/Vault-API/common"
 	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
@@ -17,20 +16,10 @@ var (
 	signals = make(chan os.Signal, 100)
 )
 
-type client struct {
-	Hostname string `json:"Hostname"`
-	IP       string `json:"IP"`
-	MAC      string `json:"MAC"`
-}
-
-type connection struct {
-	Clients []*client `json:"Clients"`
-}
-
 func GetConnectedDevices(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
 	_, result,_ := runBash()
 	out := parseBashOutput(result)
-	common.ClientResponse(out, w)
+	clientResponse(out, w)
 }
 
 func parseBashOutput(result string) []byte {

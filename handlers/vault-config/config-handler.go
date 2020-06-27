@@ -2,7 +2,6 @@ package vault_config
 
 import (
 	"fmt"
-	"github.com/Vioft/Vault-API/common"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"os/exec"
@@ -16,8 +15,8 @@ var UbusCall = Ubus(func(arg string) ([]byte, error) {
 })
 
 func HealthCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	response := fmt.Sprintf(`{Status: UP}`)
-	common.WriteOKResponse(w, response)
+	response := fmt.Sprintf(`Up`)
+	WriteOKResponse(w, response)
 }
 
 func GetSystemInfo(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
