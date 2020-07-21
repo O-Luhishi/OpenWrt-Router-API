@@ -28,7 +28,7 @@ func ScanLocalHost(w http.ResponseWriter, r *http.Request, _ httprouter.Params) 
 }
 
 func ScanNetworkDevice(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	fmt.Fprint(w, "Scanning Beginning!\n")
+	log.Printf("Scanning NOW Beginning!")
 	ip_add := params.ByName("ip_add")
 	ps := portscanner.NewPortScanner(ip_add, 2*time.Second, 5)
 	m := make(map[int]string)
