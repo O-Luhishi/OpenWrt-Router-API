@@ -1,8 +1,9 @@
 package vault_config
 
 import (
-	"fmt"
+	"encoding/json"
 	"github.com/julienschmidt/httprouter"
+	"log"
 	"net/http"
 	"os/exec"
 	"strings"
@@ -15,8 +16,13 @@ var UbusCall = Ubus(func(arg string) ([]byte, error) {
 })
 
 func HealthCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	response := fmt.Sprintf(`Up`)
-	WriteOKResponse(w, response)
+	m := make(map[string]string)
+	m["StatusS"] = "Up"
+	status, _ := json.Marshal(m)
+	log.Printf("%s \n", status)
+	healthcheckResponse(status, w)
+	//response := fmt.Sprintf(`Up`)
+	//WriteOKResponse(w, response)
 }
 
 func GetSystemInfo(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {

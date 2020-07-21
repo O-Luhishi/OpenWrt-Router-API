@@ -37,8 +37,8 @@ func ScanNetworkDevice(w http.ResponseWriter, r *http.Request, params httprouter
 	openedPorts := ps.GetOpenedPort(20, 30000)
 	for i := 0; i < len(openedPorts); i++ {
 		port := openedPorts[i]
-		fmt.Print(" ", port, " [open]")
-		fmt.Println("  -->  ", ps.DescribePort(port))
+		log.Print(" ", port, " [open]")
+		log.Println("  -->  ", ps.DescribePort(port))
 		m[port] = ps.DescribePort(port)
 	}
 	connectedClients, _ := json.Marshal(m)

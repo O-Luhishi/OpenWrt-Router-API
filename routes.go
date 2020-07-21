@@ -4,6 +4,7 @@ import (
 	"github.com/Vioft/Vault-API/handlers/vault-config"
 	"github.com/Vioft/Vault-API/handlers/vault-port-scanner"
 	"github.com/Vioft/Vault-API/handlers/vault-network-mapper"
+	vault_speed "github.com/Vioft/Vault-API/handlers/vault-speed"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -42,6 +43,8 @@ func AllRoutes() Routes {
 
 		// Vault-Network-Mapper Module
 		Route{"GetConnectedClients", "GET", "/networkmap/getconnectedclients", vault_network_mapper.GetConnectedDevices},
+
+		Route{"GetDownloadSpeed", "GET", "/get/downloadspeed", vault_speed.Get_Download_Speed},
 	}
 	return routes
 }

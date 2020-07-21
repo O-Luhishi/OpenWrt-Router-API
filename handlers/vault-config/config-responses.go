@@ -37,6 +37,13 @@ func UbusResponse(s func() ([]byte, error), w http.ResponseWriter) {
 	}
 }
 
+func healthcheckResponse(status []byte, w http.ResponseWriter) {
+	response := status
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
+}
+
 // Writes the response as a standard JSON response with StatusOK
 func WriteOKResponse(w http.ResponseWriter, m interface{}) {
 	w.Header().Set("Content-Type", "application/json")
