@@ -2,6 +2,8 @@ package vault_config
 
 type Ubus func(arg string) ([]byte, error)
 
+type NUbus func(arg string) ([]byte, error)
+
 func (u Ubus) Info() ([]byte, error) {
 	return u("system info")
 }
@@ -36,4 +38,9 @@ func (u Ubus) NetworkConfig() ([]byte, error) {
 
 func (u Ubus) WlanClients() ([]byte, error) {
 	return u("hostapd.wlan0 get_clients")
+}
+
+func (u NUbus) BanClient(x string) ([]byte, error) {
+	var macAddress, banTime string
+	return u("hostapd.wlan0 del_client `{'addr':`" + macAddress + "`, 'reason':1, 'deauth':true, 'ban_time': " + banTime)
 }

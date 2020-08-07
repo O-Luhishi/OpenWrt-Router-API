@@ -17,7 +17,7 @@ var UbusCall = Ubus(func(arg string) ([]byte, error) {
 
 func HealthCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	m := make(map[string]string)
-	m["StatusS"] = "Up"
+	m["Status"] = "Up"
 	status, _ := json.Marshal(m)
 	log.Printf("%s \n", status)
 	healthcheckResponse(status, w)

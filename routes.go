@@ -2,9 +2,10 @@ package Vault_API
 
 import (
 	"github.com/Vioft/Vault-API/handlers/vault-config"
-	"github.com/Vioft/Vault-API/handlers/vault-port-scanner"
+	"github.com/Vioft/Vault-API/handlers/vault-device-manager"
 	"github.com/Vioft/Vault-API/handlers/vault-network-mapper"
-	vault_speed "github.com/Vioft/Vault-API/handlers/vault-speed"
+	"github.com/Vioft/Vault-API/handlers/vault-port-scanner"
+	"github.com/Vioft/Vault-API/handlers/vault-speed"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -41,10 +42,15 @@ func AllRoutes() Routes {
 		Route{"GetNetworkConfig", "GET", "/config/getnetworkconfig", vault_config.GetNetworkConfig},
 		Route{"GetWlanClients", "GET", "/config/getwlanclients", vault_config.GetWlanClients},
 
+
 		// Vault-Network-Mapper Module
 		Route{"GetConnectedClients", "GET", "/networkmap/getconnectedclients", vault_network_mapper.GetConnectedDevices},
 
+		// Vault-Speed Module
 		Route{"GetDownloadSpeed", "GET", "/get/downloadspeed", vault_speed.Get_Download_Speed},
+
+		// Vault-Client-Manager
+		Route{"BanClient", "GET", "/client/banclient/:mac/:time", vault_device_manager.BanClient},
 	}
 	return routes
 }

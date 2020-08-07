@@ -3,7 +3,7 @@ package vault_port_scanner
 import (
 	"encoding/json"
 	"fmt"
-	portscanner "github.com/anvie/port-scanner"
+	"github.com/anvie/port-scanner"
 	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
