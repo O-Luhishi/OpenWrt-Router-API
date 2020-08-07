@@ -1,23 +1,16 @@
 package vault_network_mapper
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/Vioft/Vault-API/common"
 	"github.com/julienschmidt/httprouter"
-	"log"
 	"net/http"
-	"os"
-	"os/exec"
 	"strings"
 )
 
-var (
-	signals = make(chan os.Signal, 100)
-)
-
-func GetConnectedDevices(w http.ResponseWriter, r *http.Request, _ httprouter.Params){
-	_, result,_ := runBash()
+func GetConnectedDevices(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	_, result, _ := common.RunBash(connectedDevicesBashWrapper())
 	out := parseBashOutput(result)
 	clientResponse(out, w)
 }
@@ -35,13 +28,7 @@ func parseBashOutput(result string) []byte {
 	return connected_clients
 }
 
-func runBash()(bool, string, string){
-	cmd := exec.Command("/bin/sh", "-s")
-	cmd.Stdin = strings.NewReader(connectedDevicesBashWrapper())
-	return finishRunning(cmd)
-}
-
-func connectedDevicesBashWrapper() string{
+func connectedDevicesBashWrapper() string {
 	return `
 #!/bin/sh
 for interface in ` + "`iwinfo | grep ESSID | cut -f 1 -s -d\" \"`;" +
@@ -62,32 +49,8 @@ done
 `
 }
 
-func finishRunning(cmd *exec.Cmd) (bool, string, string) {
-	//log.Printf("Running Connected Clients Script")
-	stdout, stderr := bytes.NewBuffer(nil), bytes.NewBuffer(nil)
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
-	done := make(chan struct{})
-	defer close(done)
-	go func() {
-		for {
-			select {
-			case <-done:
-				return
-			case s := <-signals:
-				cmd.Process.Signal(s)
-			}
-		}
-	}()
-	if err := cmd.Run(); err != nil {
-		log.Printf("Error running %v", err)
-		return false, string(stdout.Bytes()), string(stderr.Bytes())
-	}
-	return true, string(stdout.Bytes()), string(stderr.Bytes())
-}
-
 // When you want to run this locally
-func replicateRouter() string{
+func replicateRouter() string {
 	return `echo Osamas-MBP 192.168.8.127 F4:0F:24:24:B4:F0
 			echo Mo-MBP 192.168.8.2 F0:F0:F0:F0:F0`
 }

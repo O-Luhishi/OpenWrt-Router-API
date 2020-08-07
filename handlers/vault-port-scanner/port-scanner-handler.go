@@ -10,7 +10,6 @@ import (
 	"time"
 )
 
-
 func ScanLocalHost(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	log.Printf("Scanning NOW Beginning!")
 	ps := portscanner.NewPortScanner("localhost", 2*time.Second, 5)

@@ -12,14 +12,13 @@ var (
 	signals = make(chan os.Signal, 100)
 )
 
-func RunBash(bashWrapper string)(bool, string, string){
+func RunBash(bashWrapper string) (bool, string, string) {
 	cmd := exec.Command("/bin/sh", "-s")
 	cmd.Stdin = strings.NewReader(bashWrapper)
 	return finishRunning(cmd)
 }
 
 func finishRunning(cmd *exec.Cmd) (bool, string, string) {
-	//log.Printf("Running Connected Clients Script")
 	stdout, stderr := bytes.NewBuffer(nil), bytes.NewBuffer(nil)
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr

@@ -8,4 +8,3 @@ func clientResponse(connectedClients []byte, w http.ResponseWriter) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(response)
 }
-

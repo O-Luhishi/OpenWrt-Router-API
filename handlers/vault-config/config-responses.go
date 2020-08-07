@@ -16,7 +16,6 @@ type HealthCheckResponse struct {
 	Data interface{} `json:"Status"`
 }
 
-
 type JsonErrorResponse struct {
 	Error *ApiError `json:"error"`
 }

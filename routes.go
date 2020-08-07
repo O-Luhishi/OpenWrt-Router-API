@@ -42,7 +42,6 @@ func AllRoutes() Routes {
 		Route{"GetNetworkConfig", "GET", "/config/getnetworkconfig", vault_config.GetNetworkConfig},
 		Route{"GetWlanClients", "GET", "/config/getwlanclients", vault_config.GetWlanClients},
 
-
 		// Vault-Network-Mapper Module
 		Route{"GetConnectedClients", "GET", "/networkmap/getconnectedclients", vault_network_mapper.GetConnectedDevices},
 
