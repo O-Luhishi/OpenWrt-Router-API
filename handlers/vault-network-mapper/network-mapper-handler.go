@@ -20,12 +20,12 @@ func parseBashOutput(result string) []byte {
 	for _, line := range strings.Split(result, "\n") {
 		if line != "" {
 			s := strings.Split(line, " ")
-			clients = append(clients, &client{Hostname: s[0], IP: s[1], MAC: s[2]})
+			clients = append(clients, &client{Hostname: s[0], IP: s[1], MAC: s[2], STATUS: true})
 		}
 	}
-	connected_clients, _ := json.Marshal(connection{Clients: clients})
-	fmt.Printf("%s\n", connected_clients)
-	return connected_clients
+	connectedClients, _ := json.Marshal(connection{Clients: clients})
+	fmt.Printf("%s\n", connectedClients)
+	return connectedClients
 }
 
 func connectedDevicesBashWrapper() string {

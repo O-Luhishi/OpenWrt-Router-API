@@ -3,9 +3,10 @@ package vault_network_mapper
 import "net/http"
 
 type client struct {
-	Hostname string `json:"Hostname"`
-	IP       string `json:"IP"`
-	MAC      string `json:"MAC"`
+	Hostname string `json:"name"`
+	MAC      string `json:"mac_address"`
+	IP       string `json:"ip_address"`
+	STATUS	 bool	`json:"status"`
 }
 
 type connection struct {
